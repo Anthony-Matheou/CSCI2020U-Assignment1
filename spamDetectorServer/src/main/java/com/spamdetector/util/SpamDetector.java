@@ -20,25 +20,26 @@ public class SpamDetector {
 
     public List<TestFile> trainAndTest(File mainDirectory) {
 //      TODO: main method of loading the directories and files, training and testing the model
-        String folderPath = "../../../../resources/data/train/ham";
+        String trainingPath = "../../../../resources/data/train/ham";
         Map<String, Integer> freq = trainHamFreq;
         Integer counter = hamFiles;
-        List<TestFile> testFiles = new ArrayList<>();
         
+        // Train
         for (int i = 0; i < 3; i++) {
             if(i == 1) {
-                folderPath += "2";
+                trainingPath += "2";
             }
             else if(i == 2) {
-                folderPath = "../../../../resources/data/train/spam";
+                trainingPath = "../../../../resources/data/train/spam";
                 freq = trainSpamFreq;
                 counter = spamFiles;
             }
                 
-            File folder = new File(folderPath);
-            iterateFolder(folder, freq, counter);
+            File folder = new File(trainingPath);
+            trainingIterate(folder, freq, counter);
         }
 
+        // Determine probabilities for each word
         for (String word : trainSpamFreq.keySet()) {
             int spamCount = trainSpamFreq.get(word);
             int hamCount = trainHamFreq.getOrDefault(word, 0);
@@ -49,57 +50,43 @@ public class SpamDetector {
         }
 
         // Read all files from the testing directories and classify them as spam or ham
+        List<TestFile> testFiles = new ArrayList<>();
+
+        // Test ham files
+        String testingPath = "../../../../resources/data/testing/ham";
+        File folder = new File(testingPath);
+        testingIterate(folder, testFiles, "ham");
+
+        // Test spam files
+        testingPath = "../../../../resources/data/testing/spam";
+        folder = new File(testingPath);
+        testingIterate(folder, testFiles, "spam");
         
-        for (File dir : mainDirectory.listFiles()) {
-            if (!dir.isDirectory()) continue;
-            boolean isSpam = dir.getName().equals("testing/spam");
-            for (File file : dir.listFiles()) {
-                double probSpam = 1.0;
-                // double probHam = 1.0;
-                try (Scanner scanner = new Scanner(file)) {
-                    while (scanner.hasNext()) {
-                        String word = scanner.next().toLowerCase();
-                        if (word.matches("\\W+")) continue;
-                        if (probabilities.containsKey(word)) {
-                            double prSiWi = probabilities.get(word);
-                            probSpam = prSiWi;
-                            // probHam = 1 - prSiWi;
-                        }
-                    }
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-                // double probTotal = probSpam + probHam;
-                // boolean isSpamDetected = probSpam / probTotal >= 0.5;
-                String classification;
-                if(isSpam) {
-                    classification = "spam";
-                }
-                else {
-                    classification = "ham";
-                }
-                testFiles.add(new TestFile(file.getPath(), probSpam, classification));
-            }
-        }
         return testFiles;
         // return new ArrayList<TestFile>();
     }
 
-    private void iterateFolder(File folder, Map<String, Integer> freq, int counter) {
+    private void trainingIterate(File folder, Map<String, Integer> freq, int counter) {
         File[] files = folder.listFiles();
 
+        // Go through each file in the folder
         for(File file: files) {
             try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
                 counter++;
                 String line;
                 ArrayList<String> inFile = new ArrayList<>();
+
+                // Read each line
                 while ((line = reader.readLine()) != null) {
-                    // split the line into words
+                    // Split the line into words
                     String[] words = line.split("\\s+");
+
+                    // Read each word
                     for (String word : words) {
-                        // process the word here
                         System.out.println(word);
                         word = word.toLowerCase();
+
+                        // Add word to map or add to counter
                         if(!inFile.contains(word)) {
                             if(freq.containsKey(word)) {
                                 freq.replace(word, trainHamFreq.get(word) + 1);
@@ -110,11 +97,50 @@ public class SpamDetector {
                         }
                     }
                 }
-            } catch (IOException e) {
+            } 
+            catch (IOException e) {
                 e.printStackTrace();
             }
         }
     }
 
+    private void testingIterate(File folder, List<TestFile> testFiles, String spam) {
+        File[] files = folder.listFiles();
+        double ypsilon = 0;
+
+        // Go through each file in the folder
+        for (File file: files) {
+            try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+                String line;
+
+                // Read each line
+                while ((line = reader.readLine()) != null) {
+                    // Split line into words
+                    String[] words = line.split("\\s+");
+
+                    // Read each word
+                    for (String word: words) {
+                        System.out.println(word);
+                        word = word.toLowerCase();
+
+                        // Retrive probability and determine ypsilon
+                        if(probabilities.containsKey(word)) {
+                            double prSWi = probabilities.get(word);
+                            ypsilon += Math.log(1-prSWi) - Math.log(prSWi);
+                        }
+                    }
+                }
+            } 
+            catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            // Determine spam probability and add TestFile to list
+            double prSF = 1/(1+Math.exp(ypsilon));
+            testFiles.add(new TestFile(file.getPath(), prSF, spam));
+            
+            ypsilon = 0;
+        }
+    }
 }
 
