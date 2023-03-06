@@ -20,7 +20,8 @@ public class SpamDetector {
 
     public List<TestFile> trainAndTest(File mainDirectory) {
 //      TODO: main method of loading the directories and files, training and testing the model
-        String trainingPath = "../../../../resources/data/train/ham";
+        String mainPath = mainDirectory.getAbsolutePath();
+        String trainingPath = mainPath + "/train/ham";
         Map<String, Integer> freq = trainHamFreq;
         Integer counter = hamFiles;
         
@@ -30,7 +31,7 @@ public class SpamDetector {
                 trainingPath += "2";
             }
             else if(i == 2) {
-                trainingPath = "../../../../resources/data/train/spam";
+                trainingPath = mainPath + "/train/spam";
                 freq = trainSpamFreq;
                 counter = spamFiles;
             }
@@ -53,12 +54,12 @@ public class SpamDetector {
         List<TestFile> testFiles = new ArrayList<>();
 
         // Test ham files
-        String testingPath = "../../../../resources/data/testing/ham";
+        String testingPath = mainPath + "/testing/ham";
         File folder = new File(testingPath);
         testingIterate(folder, testFiles, "ham");
 
         // Test spam files
-        testingPath = "../../../../resources/data/testing/spam";
+        testingPath = mainPath + "testing/spam";
         folder = new File(testingPath);
         testingIterate(folder, testFiles, "spam");
         
@@ -138,7 +139,7 @@ public class SpamDetector {
             // Determine spam probability and add TestFile to list
             double prSF = 1/(1+Math.exp(ypsilon));
             testFiles.add(new TestFile(file.getPath(), prSF, spam));
-            
+
             ypsilon = 0;
         }
     }
