@@ -19,14 +19,15 @@ public class SpamResource {
     List<TestFile> testFiles;
     int truePos = 0;
     int trueNeg = 0;
+    int falsePos = 0;
 
-    SpamResource(){
+    public SpamResource(){
 //        TODO: load resources, train and test to improve performance on the endpoint calls
         System.out.print("Training and testing the model, please wait");
 
 //      TODO: call  this.trainAndTest();
         testFiles = this.trainAndTest();
-
+        System.out.println(testFiles.size());
     }
     @GET
     @Produces("application/json")
@@ -42,16 +43,8 @@ public class SpamResource {
     public Response getAccuracy() {
 //      TODO: return the accuracy of the detector, return in a Response object
         int numberOfFiles = testFiles.size();
-        
-        for (TestFile testFile : testFiles) {
-            if(testFile.getSpamProbability() > 0.5 && testFile.getActualClass().equals("spam")) {
-                truePos++;
-            }
-            else if(testFile.getSpamProbability() <= 0.5 && testFile.getActualClass().equals("ham")) {
-                trueNeg++;
-            }
-        }
-        double accuracy = (truePos+trueNeg)/numberOfFiles;
+        countResults();
+        double accuracy = (double)(truePos+trueNeg)/numberOfFiles;
         Response.ResponseBuilder response = Response.ok(accuracy);
         return response.build();
     }
@@ -61,7 +54,8 @@ public class SpamResource {
     @Produces("application/json")
     public Response getPrecision() {
        //      TODO: return the precision of the detector, return in a Response object
-        double precision = truePos/(truePos+trueNeg);
+        countResults();
+        double precision = (double)truePos/(double)(falsePos + truePos);
         Response.ResponseBuilder response = Response.ok(precision);
         return response.build();
     }
@@ -70,9 +64,24 @@ public class SpamResource {
         if (this.detector==null){
             this.detector = new SpamDetector();
         }
-
-//        TODO: load the main directory "data" here from the Resources folder
-        File mainDirectory = new File("../../../../resources/data");
+    
+        // Obtain the absolute path of the "data" folder in the resources directory
+        File mainDirectory = new File(getClass().getClassLoader().getResource("data").getFile());
         return this.detector.trainAndTest(mainDirectory);
     }
+
+    private void countResults() {
+        for (TestFile testFile : testFiles) {
+            if(testFile.getSpamProbability() > 0.5 && testFile.getActualClass().equals("spam")) {
+                truePos++;
+            }
+            else if(testFile.getSpamProbability() <= 0.5 && testFile.getActualClass().equals("ham")) {
+                trueNeg++;
+            }
+            else if(testFile.getSpamProbability() > 0.5 && testFile.getActualClass().equals("ham")) {
+                falsePos++;
+            }
+        }
+    }
+    
 }

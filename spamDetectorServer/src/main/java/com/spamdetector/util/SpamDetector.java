@@ -4,6 +4,7 @@ import com.spamdetector.domain.TestFile;
 
 import java.io.*;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 
 /**
@@ -15,15 +16,16 @@ public class SpamDetector {
     Map<String, Integer> trainHamFreq = new TreeMap<>();
     Map<String, Integer> trainSpamFreq = new TreeMap<>();
     Map<String, Double> probabilities = new TreeMap<>();
-    Integer hamFiles = Integer.valueOf(0);
-    Integer spamFiles = Integer.valueOf(0);
+    AtomicInteger hamFiles = new AtomicInteger(0);
+    AtomicInteger spamFiles = new AtomicInteger(0);
 
     public List<TestFile> trainAndTest(File mainDirectory) {
 //      TODO: main method of loading the directories and files, training and testing the model
         String mainPath = mainDirectory.getAbsolutePath();
+        System.out.println(mainPath);
         String trainingPath = mainPath + "/train/ham";
         Map<String, Integer> freq = trainHamFreq;
-        Integer counter = hamFiles;
+        AtomicInteger counter = hamFiles;
         
         // Train
         for (int i = 0; i < 3; i++) {
@@ -44,8 +46,8 @@ public class SpamDetector {
         for (String word : trainSpamFreq.keySet()) {
             int spamCount = trainSpamFreq.get(word);
             int hamCount = trainHamFreq.getOrDefault(word, 0);
-            double prWiS = (double) spamCount / spamFiles;
-            double prWiH = (double) hamCount / hamFiles;
+            double prWiS = (double) spamCount / spamFiles.get();
+            double prWiH = (double) hamCount / hamFiles.get();
             double prSWi = prWiS / (prWiS + prWiH);
             probabilities.put(word, prSWi);
         }
@@ -54,12 +56,12 @@ public class SpamDetector {
         List<TestFile> testFiles = new ArrayList<>();
 
         // Test ham files
-        String testingPath = mainPath + "/testing/ham";
+        String testingPath = mainPath + "/test/ham";
         File folder = new File(testingPath);
         testingIterate(folder, testFiles, "ham");
 
         // Test spam files
-        testingPath = mainPath + "testing/spam";
+        testingPath = mainPath + "/test/spam";
         folder = new File(testingPath);
         testingIterate(folder, testFiles, "spam");
         
@@ -67,13 +69,13 @@ public class SpamDetector {
         // return new ArrayList<TestFile>();
     }
 
-    private void trainingIterate(File folder, Map<String, Integer> freq, int counter) {
+    private void trainingIterate(File folder, Map<String, Integer> freq, AtomicInteger counter) {
         File[] files = folder.listFiles();
-
+        System.out.println(folder.getAbsolutePath());
         // Go through each file in the folder
         for(File file: files) {
             try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-                counter++;
+                counter.incrementAndGet();
                 String line;
                 ArrayList<String> inFile = new ArrayList<>();
 
@@ -84,13 +86,13 @@ public class SpamDetector {
 
                     // Read each word
                     for (String word : words) {
-                        System.out.println(word);
-                        word = word.toLowerCase();
+                        // System.out.println(word);
+                        word = word.replaceAll("\\p{Punct}", "").toLowerCase();
 
                         // Add word to map or add to counter
-                        if(!inFile.contains(word)) {
+                        if(!word.isBlank() && !inFile.contains(word)) {
                             if(freq.containsKey(word)) {
-                                freq.replace(word, trainHamFreq.get(word) + 1);
+                                freq.replace(word, freq.get(word) + 1);
                             }
                             else {
                                 freq.put(word, 1);
@@ -108,7 +110,7 @@ public class SpamDetector {
     private void testingIterate(File folder, List<TestFile> testFiles, String spam) {
         File[] files = folder.listFiles();
         double ypsilon = 0;
-
+        System.out.println(folder.getAbsolutePath());
         // Go through each file in the folder
         for (File file: files) {
             try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
@@ -121,11 +123,11 @@ public class SpamDetector {
 
                     // Read each word
                     for (String word: words) {
-                        System.out.println(word);
-                        word = word.toLowerCase();
+                        // System.out.println(word);
+                        word = word.replaceAll("\\p{Punct}", "").toLowerCase();
 
                         // Retrive probability and determine ypsilon
-                        if(probabilities.containsKey(word)) {
+                        if(!word.isBlank() && probabilities.containsKey(word)) {
                             double prSWi = probabilities.get(word);
                             ypsilon += Math.log(1-prSWi) - Math.log(prSWi);
                         }
@@ -138,8 +140,9 @@ public class SpamDetector {
 
             // Determine spam probability and add TestFile to list
             double prSF = 1/(1+Math.exp(ypsilon));
-            testFiles.add(new TestFile(file.getPath(), prSF, spam));
-
+            if (!Double.isInfinite(prSF) && !Double.isNaN(prSF)) {
+                testFiles.add(new TestFile(file.getPath(), prSF, spam));
+            }
             ypsilon = 0;
         }
     }
