@@ -34,6 +34,7 @@ public class SpamResource {
     public Response getSpamResults() {
 //       TODO: return the test results list of TestFile, return in a Response object
         Response.ResponseBuilder response = Response.ok(testFiles);
+        response.header("Access-Control-Allow-Origin", "*");
         return response.build();
     }
 
@@ -48,6 +49,7 @@ public class SpamResource {
 
         String jsonResponse = "{\"accuracy\":" + accuracy + "}";
         Response.ResponseBuilder response = Response.ok(jsonResponse);
+        response.header("Access-Control-Allow-Origin", "*");
         return response.build();
     }
 
@@ -61,6 +63,7 @@ public class SpamResource {
 
         String jsonResponse = "{\"precision\":" + precision + "}";
         Response.ResponseBuilder response = Response.ok(jsonResponse);
+        response.header("Access-Control-Allow-Origin", "*");
         return response.build();
     }
 
