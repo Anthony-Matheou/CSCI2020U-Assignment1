@@ -141,7 +141,7 @@ public class SpamDetector {
             // Determine spam probability and add TestFile to list
             double prSF = 1/(1+Math.exp(ypsilon));
             if (!Double.isInfinite(prSF) && !Double.isNaN(prSF)) {
-                testFiles.add(new TestFile(file.getPath(), prSF, spam));
+                testFiles.add(new TestFile(file.getName(), prSF, spam));
             }
             ypsilon = 0;
         }

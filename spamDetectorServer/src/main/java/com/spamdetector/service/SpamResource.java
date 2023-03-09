@@ -45,7 +45,9 @@ public class SpamResource {
         int numberOfFiles = testFiles.size();
         countResults();
         double accuracy = (double)(truePos+trueNeg)/numberOfFiles;
-        Response.ResponseBuilder response = Response.ok(accuracy);
+
+        String jsonResponse = "{\"accuracy\":" + accuracy + "}";
+        Response.ResponseBuilder response = Response.ok(jsonResponse);
         return response.build();
     }
 
@@ -56,7 +58,9 @@ public class SpamResource {
        //      TODO: return the precision of the detector, return in a Response object
         countResults();
         double precision = (double)truePos/(double)(falsePos + truePos);
-        Response.ResponseBuilder response = Response.ok(precision);
+
+        String jsonResponse = "{\"precision\":" + precision + "}";
+        Response.ResponseBuilder response = Response.ok(jsonResponse);
         return response.build();
     }
 
