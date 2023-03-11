@@ -26,7 +26,9 @@ $(document).ready(function() {
       var tds = tbody.querySelector('tr').querySelectorAll('td');
       for (var i = 0; i < ths.length; i++) {
         console.log(tds[i].offsetWidth);
-        ths[i].style.width = tds[i].offsetWidth + 'px';
+        var width = tds[i].offsetWidth + 15;
+        tds[i].style.width = width + 'px'
+        ths[i].style.width = width + 'px';
       }
 
     },

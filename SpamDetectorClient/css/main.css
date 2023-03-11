@@ -24,9 +24,9 @@ html {
 }
 
 .scrollbar {
-  position: absolute;
+  position: relative;
   top: 0;
-  right: -16px;
+  right: 0px;
   bottom: 0;
   overflow-y: scroll;
   width: 16px;
@@ -49,18 +49,23 @@ tbody {
   overflow-y: auto;
 }
 
-th,
+th {
+  padding: 8px;
+  color: white;
+  text-align: center;
+}
+
 td {
   padding: 8px;
   text-align: center;
 }
 
 th {
-  background-color: #f2f2f2;
+  background-color: darkslategray;
 }
 
 tr:nth-child(even) {
-  background-color: #f2f2f2;
+  background-color: #d4d4d4;
 }
 
 /*
