@@ -74,38 +74,40 @@ public class SpamDetector {
         System.out.println(folder.getAbsolutePath());
         // Go through each file in the folder
         for(File file: files) {
-            try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-                counter.incrementAndGet();
-                String line;
-                ArrayList<String> inFile = new ArrayList<>();
-
-                // Read each line
-                while ((line = reader.readLine()) != null) {
-                    // Split the line into words
-                    String[] words = line.split("\\s+");
-
-                    // Read each word
-                    for (String word : words) {
-                        // System.out.println(word);
-                        word = word.replaceAll("\\p{Punct}", "").toLowerCase();
-
-                        // Add word to map or add to counter
-                        if(!word.isBlank() && !inFile.contains(word)) {
-                            if(freq.containsKey(word)) {
-                                freq.replace(word, freq.get(word) + 1);
-                            }
-                            else {
-                                freq.put(word, 1);
+            if(!file.getName().equals("cmds")) {
+                try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+                    counter.incrementAndGet();
+                    String line;
+                    ArrayList<String> inFile = new ArrayList<>();
+    
+                    // Read each line
+                    while ((line = reader.readLine()) != null) {
+                        // Split the line into words
+                        String[] words = line.split("\\s+");
+    
+                        // Read each word
+                        for (String word : words) {
+                            // System.out.println(word);
+                            word = word.replaceAll("\\p{Punct}", "").toLowerCase();
+    
+                            // Add word to map or add to counter
+                            if(!word.isBlank() && !inFile.contains(word)) {
+                                if(freq.containsKey(word)) {
+                                    freq.replace(word, freq.get(word) + 1);
+                                }
+                                else {
+                                    freq.put(word, 1);
+                                }
                             }
                         }
                     }
                 }
-            } 
-            catch (IOException e) {
-                e.printStackTrace();
+                catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
-    }
+    }    
 
     private void testingIterate(File folder, List<TestFile> testFiles, String spam) {
         File[] files = folder.listFiles();
@@ -113,30 +115,31 @@ public class SpamDetector {
         System.out.println(folder.getAbsolutePath());
         // Go through each file in the folder
         for (File file: files) {
-            try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-                String line;
+            if(!file.getName().equals("cmds")) {
+                try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+                    String line;
 
-                // Read each line
-                while ((line = reader.readLine()) != null) {
-                    // Split line into words
-                    String[] words = line.split("\\s+");
+                    // Read each line
+                    while ((line = reader.readLine()) != null) {
+                        // Split line into words
+                        String[] words = line.split("\\s+");
 
-                    // Read each word
-                    for (String word: words) {
-                        // System.out.println(word);
-                        word = word.replaceAll("\\p{Punct}", "").toLowerCase();
+                        // Read each word
+                        for (String word: words) {
+                            // System.out.println(word);
+                            word = word.replaceAll("\\p{Punct}", "").toLowerCase();
 
-                        // Retrive probability and determine ypsilon
-                        if(!word.isBlank() && probabilities.containsKey(word)) {
-                            double prSWi = probabilities.get(word);
-                            ypsilon += Math.log(1-prSWi) - Math.log(prSWi);
+                            // Retrive probability and determine ypsilon
+                            if(!word.isBlank() && probabilities.containsKey(word)) {
+                                double prSWi = probabilities.get(word);
+                                ypsilon += Math.log(1-prSWi) - Math.log(prSWi);
+                            }
                         }
                     }
+                } 
+                catch (IOException e) {
+                    e.printStackTrace();
                 }
-            } 
-            catch (IOException e) {
-                e.printStackTrace();
-            }
 
             // Determine spam probability and add TestFile to list
             double prSF = 1/(1+Math.exp(ypsilon));
@@ -144,6 +147,7 @@ public class SpamDetector {
                 testFiles.add(new TestFile(file.getName(), prSF, spam));
             }
             ypsilon = 0;
+            }
         }
     }
 }
