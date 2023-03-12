@@ -14,13 +14,56 @@
 html {
   color: #222;
   font-size: 1em;
-  font: 1em sans-serif;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  letter-spacing: 2px;
   line-height: 1.4;
+}
+
+.sidebar {
+  display: flex;
+  height: 40px;
+}
+
+.sidebar > .main-content {
+  flex: 1;
+  background-color: rgb(224, 123, 0);
+}
+
+a {
+  background-color: #f0f0f0;
+  padding: 10px;
+  margin-left: 8px;
+  border-radius: 10px;
+  text-decoration: none;
+}
+
+a:hover {
+  background-color:rgb(40, 40, 40);
+  color: #fff;
+}
+
+a.currentPage {
+  background-color: rgb(40, 40, 40);
+  color: #fff;
+}
+
+
+h2 {
+  margin-left: 8px;
+  margin-bottom: 8px;
+  color:rgb(224, 123, 0);
+}
+
+p1 {
+  margin-left: 8px;
+  position: relative;
+  display: flex;
 }
 
 .wrapper {
   position: relative;
   display: inline-block;
+  padding: 8px;
 }
 
 .scrollbar {
@@ -61,12 +104,43 @@ td {
 }
 
 th {
-  background-color: darkslategray;
+  background-color:rgb(40, 40, 40);
 }
 
 tr:nth-child(even) {
   background-color: #d4d4d4;
 }
+
+/* Style the header */
+header {
+  background-color: rgb(40, 40, 40);
+  color: #fff;
+  padding: 20px;
+  text-align: center;
+  position: relative;
+  height: 30px;
+}
+
+header h1 {
+	margin: 0;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+/* Style the footer */
+footer {
+  background-color: rgb(40, 40, 40);
+	color: #fff;
+	padding: 10px;
+	text-align: center;
+	position: relative;
+	bottom: 0;
+	width: 100%;
+	height: 25px; /* Set the height to 50 pixels */
+}
+
 
 /*
  * Remove text-shadow in selection highlight:

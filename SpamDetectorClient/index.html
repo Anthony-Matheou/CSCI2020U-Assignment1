@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title></title>
+  <title>Spam Detector</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -25,8 +25,23 @@
 </head>
 
 <body>
-
+  <header>
+    <h1>Spam Detector</h1>
+  </header>
   <!-- Add your site or application content here -->
+  <div class="sidebar">
+    <div class="main-content">
+      <a href="index.html" class="currentPage">Dashboard</a>
+      <a href="about.html">About</a>
+
+    </div>
+  </div>
+  
+  <h2>Resultant Data</h2>
+  <p1>
+    Below is a table of the test results yielded by our spam detector algorithm. 
+    The spam probability is the algorithm's estimate of the likelihood that the file is spam, expressed as a percentage between 0 and 1.
+  </p1>
   <div class="wrapper">
     <table id="resultsTable">
       <thead>
@@ -41,9 +56,21 @@
     </table>
   </div>
 
-  <p>Accuracy: <span id="accuracy"></span></p>
+  <h2>Accuracy</h2>
+  <p1>
+    Using the resulting data, we calculated the accuracy of the algorithm.
+    The accuracy represents the percentage in which the algorithm correctly identified the class of the file.
+    We determined the accuracy to be:
+  </p1>
+  <h3><span id="accuracy"></span> <style>h3{margin-left: 8px;}</style></h3>
 
-  <p>Precision: <span id="precision"></span></p>
+  <h2>Precision</h2>
+  <p1>
+    From the data, we also calculated the precision of our algorithm.
+    The precision represents the proportion of spam files correctly identified as spam.
+    We found the precision to be:
+  </p1>
+  <h3><span id="precision"></span></h3>
 
   <script src="js/vendor/modernizr-3.11.2.min.js"></script>
   <script src="js/plugins.js"></script>
@@ -56,6 +83,9 @@
   </script>
   <script src="https://www.google-analytics.com/analytics.js" async></script>
 
+  <footer>
+    <p2>Copyright &copy; CSCI 2020U - Winter 2023</p2>
+  </footer>
 </body>
 
 </html>
