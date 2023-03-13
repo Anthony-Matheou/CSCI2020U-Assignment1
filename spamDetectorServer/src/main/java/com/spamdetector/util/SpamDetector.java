@@ -127,7 +127,7 @@ public class SpamDetector {
                         // Read each word
                         for (String word: words) {
                             // System.out.println(word);
-                            word = word.replaceAll("\\p{Punct}", "").toLowerCase();
+                            word = word.replaceAll("[^a-zA-Z]", "").toLowerCase();
 
                             // Retrive probability and determine ypsilon
                             if(!word.isBlank() && probabilities.containsKey(word)) {
@@ -143,9 +143,13 @@ public class SpamDetector {
 
             // Determine spam probability and add TestFile to list
             double prSF = 1/(1+Math.exp(ypsilon));
-            if (!Double.isInfinite(prSF) && !Double.isNaN(prSF)) {
-                testFiles.add(new TestFile(file.getName(), prSF, spam));
+            if(Double.isInfinite(prSF)) {
+                prSF = 1.0;
             }
+            else if(Double.isNaN(prSF)) {
+                prSF = 0.0;
+            }
+            testFiles.add(new TestFile(file.getName(), prSF, spam));
             ypsilon = 0;
             }
         }
