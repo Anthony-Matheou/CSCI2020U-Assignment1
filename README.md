@@ -1,48 +1,75 @@
-# Assignment 01 - Spam Detector (Instructions)
-> Course: CSCI 2020U: Software Systems Development and Integration
+a\. Project information:
 
-This is the template for your Assignment 01.
+Group members: (Huzefa Ali Agar Paliwala, Anthony Matheou)
 
-## Overview
-You have become frustrated with all the advertisements in your inbox. You resolve to create a spam detector to filter out the spam. The spam detector will use a dataset of E-Mails (spam or otherwise) to train your program to recognize whether or not new E-Mails are spam. The program will use a unigram approach [1], where each word is counted and associated with whether or not the message is spam. Your program will calculate probabilities based on each word’s frequency [2]. Luckily, you have not emptied your spam folder or inbox in quite a while, so you have many samples to use to train your system. 
+Student numbers:(100815505, 100828562)
 
-- Check the `Canvas/Assingments/Assignment 01` for more the detailed instructions.
+Our project is a spam detector application that can distinguish spam
+emails from non-spam email. We have trained our model using a dataset of
+emails (spam and non-spam) and have calculated probabilities based on
+the frequency of each word. We implemented the Naive Bayes algorithm
+using the unigram approach to train our program to recognize whether an
+email is spam or not. Our application uses a dataset of emails to train
+the model, and then it can predict if a new email is spam or not. We
+have also developed a simple user interface where the test results are
+displayed as well as the accuracy and precision of the algorithm.
 
-### SpamDetectorServer - Endpoints
+Below are screenshots of our application running:
 
-**Listing all the test files**
+![](media/image1.png){width="6.414583333333334in"
+height="2.160416666666667in"}
 
-This will return a `application/json` content type.
-- `http://localhost:8080/spamDetector-1.0/api/spam`
-See a sample of the response data:
-```
-[{"spamProbRounded":"0.00000","file":"00006.654c4ec7c059531accf388a807064363","spamProbability":5.901245803391957E-62,"actualClass":"Ham"},{"spamProbRounded":"0.00000","file":"00007.2e086b13730b68a21ee715db145522b9","spamProbability":2.800348071907053E-12,"actualClass":"Ham"},{"spamProbRounded":"0.00000","file":"00008.6b73027e1e56131377941ff1db17ff12","spamProbability":8.66861037294167E-14,"actualClass":"Ham"},{"spamProbRounded":"0.00000","file":"00009.13c349859b09264fa131872ed4fb6e4e","spamProbability":6.947265471550557E-12,"actualClass":"Ham"},{"spamProbRounded":"0.00000","file":"00010.d1b4dbbad797c5c0537c5a0670c373fd","spamProbability":1.8814467288977145E-7,"actualClass":"Ham"},{"spamProbRounded":"0.00039","file":"00011.bc1aa4dca14300a8eec8b7658e568f29","spamProbability":3.892844289937937E-4,"actualClass":"Ham"}]
-```
+**Figure 1: Resultant Data Section**
 
-**Calculate and get accuracy**
-This will return a `application/json` content type.
-- `http://localhost:8080/spamDetector-1.0/api/spam/accuracy`
-See a sample of the response data:
-```
-{"val": 0.87564}
-```
+![Image](media/image2.png){width="6.414583333333334in"
+height="1.2743055555555556in"}
 
-**Calculate and get precision**
-This will return a `application/json` content type.
-- `http://localhost:8080/spamDetector-1.0/api/spam/precision`
-See a sample of the response data:
-```
-{"val": 0.56484}
-```
-### SpamDetectorServer - SpamDetector class
+**Figure 2: Accuracy and Precision Sections**
 
-Most of your programming will be in the `SpamDetector` class. This class will be responsible for reading the testing and training data files, training, and tesing the model.
+![Graphical user interface, text, application Description automatically
+generated](media/image3.png){width="6.414583333333334in"
+height="1.3111111111111111in"}
 
-> Obs1. Feel free to create other helper classes as you see fit.
-> 
-> Obs2. You are not expected to get the exact same values as the ones shown in the samples.
+**Figure 3: About Page**
 
-### References 
-[1] https://en.wikipedia.org/wiki/Bag-of-words_model 
+Our application achieved an approximate precision and accuracy of 75%
+and 82%, respectively.
 
-[2] https://en.wikipedia.org/wiki/Naive_Bayes_spam_filtering 
+b\. Improvements:
+
+User Interface: We improved on the user interface by improving the
+colour scheme and making it match the website icon provided to us in the
+template. Furthermore, we changed the UI to be sleeker and easy to
+navigate, as well as changing the font stylings to be easy to read.
+
+Model Accuracy: We have improved the accuracy of our model by removing
+characters that are not letters from the words, which also ignores
+strings that are entirely numbers or entirely punctuation. We also
+ensured that the algorithm ignored the "cmds" files which created the
+training and testing files.
+
+c\. How to Run:
+
+To run our website, follow these steps:
+
+-   Clone the repository from GitHub using git clone.
+
+-   Open the project folder in an IDE such as IntelliJ or Visual Studio
+    Code.
+
+-   Install the required packages.
+
+-   Install the required GlassFish server.
+
+-   Turn on the GlassFish server.
+
+-   Deploy the project to GlassFish.
+
+-   Run the website.
+
+-   Once on the website, the data will take some time to appear.
+
+d\. Other Resources
+
+No external libraries were used in the improvement of the UI or the
+algorithm.
