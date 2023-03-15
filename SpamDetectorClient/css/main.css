@@ -11,6 +11,8 @@
    Base styles: opinionated defaults
    ========================================================================== */
 
+
+/* Default styles for the document */
 html {
   color: #222;
   font-size: 1em;
@@ -19,6 +21,7 @@ html {
   line-height: 1.4;
 }
 
+/* Style the sidebar */
 .sidebar {
   display: flex;
   height: 40px;
@@ -37,29 +40,33 @@ a {
   text-decoration: none;
 }
 
+/* Changes the colours of the sidebar buttons when hovered over */
 a:hover {
   background-color:rgb(40, 40, 40);
   color: #fff;
 }
 
+/* Changes the colours of the sidebar buttons when on that page  */
 a.currentPage {
   background-color: rgb(40, 40, 40);
   color: #fff;
 }
 
-
+/* Set the style of the headers */
 h2 {
   margin-left: 8px;
   margin-bottom: 8px;
   color:rgb(224, 123, 0);
 }
 
+/* Set the style of the precision and accuracy text */
 p1 {
   margin-left: 8px;
   position: relative;
   display: flex;
 }
 
+/* Sets the style of the table and its scrollbar */
 .wrapper {
   position: relative;
   display: inline-block;
@@ -107,11 +114,12 @@ th {
   background-color:rgb(40, 40, 40);
 }
 
+/* Make the background colour alternate every row */
 tr:nth-child(even) {
   background-color: #d4d4d4;
 }
 
-/* Style the header */
+/* Style the title header */
 header {
   background-color: rgb(40, 40, 40);
   color: #fff;
@@ -121,6 +129,7 @@ header {
   height: 30px;
 }
 
+/* Style the title text */
 header h1 {
 	margin: 0;
 	position: absolute;
@@ -137,7 +146,7 @@ footer {
 	text-align: center;
 	position: relative;
 	bottom: 0;
-	height: 25px; /* Set the height to 50 pixels */
+	height: 25px;
 }
 
 

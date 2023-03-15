@@ -1,4 +1,4 @@
-**a\. Project information:**
+## **Project Information** ##
 
 Group members: Huzefa Ali Agar Paliwala, Anthony Matheou
 
@@ -36,7 +36,7 @@ Our application achieved an approximate precision and accuracy of 75%
 and 82%, respectively.
 
 
-**b\. Improvements**:
+## **Improvements** ##
 
 User Interface: We improved on the user interface by improving the
 colour scheme and making it match the website icon provided to us in the
@@ -49,7 +49,7 @@ strings that are entirely numbers or entirely punctuation. We also
 ensured that the algorithm ignored the "cmds" files which created the
 training and testing files.
 
-**c\. How to Run**:
+## **How to Run** ##
 
 To run our website, follow these steps:
 
@@ -70,7 +70,7 @@ To run our website, follow these steps:
 
 -   Once on the website, the data will take some time to appear.
 
-**d\. Other Resources**
+## **Other Resources** ##
 
 No external libraries were used in the improvement of the UI or the
 algorithm.
