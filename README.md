@@ -16,18 +16,17 @@ displayed as well as the accuracy and precision of the algorithm.
 
 Below are screenshots of our application running:
 
-![](media/image1.png){width="6.414583333333334in"
+![](README_Images/Results.png){width="6.414583333333334in"
 height="2.160416666666667in"}
 
 **Figure 1: Resultant Data Section**
 
-![Image](media/image2.png){width="6.414583333333334in"
+![](README_Images/AccuracyPrecision.png){width="6.414583333333334in"
 height="1.2743055555555556in"}
 
 **Figure 2: Accuracy and Precision Sections**
 
-![Graphical user interface, text, application Description automatically
-generated](media/image3.png){width="6.414583333333334in"
+![](README_Images/AboutPage.png){width="6.414583333333334in"
 height="1.3111111111111111in"}
 
 **Figure 3: About Page**
