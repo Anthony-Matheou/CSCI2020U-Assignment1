@@ -16,30 +16,21 @@ displayed as well as the accuracy and precision of the algorithm.
 
 Below are screenshots of our application running:
 
-<style>
-    .center {
-        text-align: center;
-    }
-</style>
-
-<div class="center">
-
-![](README_Images/Results.png)
-
-**Figure 1: Resultant Data Section**
-<div>&nbsp</div>
-
-![](README_Images/AccuracyPrecision.png)
-
-**Figure 2: Accuracy and Precision Sections**
-<div>&nbsp</div>
-
-![](README_Images/AboutPage.png)
-
-**Figure 3: About Page**
-
-<div>&nbsp</div>
-</div>
+<p align="center">
+  <img src="README_Images/Results.png" alt="Resultant Data Section">
+  <br>
+  <em>Figure 1: Resultant Data Section</em>
+</p>
+<p align="center">
+  <img src="README_Images/AccuracyPrecision.png" alt="Accuracy and Precision Sections">
+  <br>
+  <em>Figure 2: Accuracy and Precision Sections</em>
+</p>
+<p align="center">
+  <img src="README_Images/AboutPage.png" alt="About Page">
+  <br>
+  <em>Figure 3: About Page</em>
+</p>
 
 Our application achieved an approximate precision and accuracy of 75%
 and 82%, respectively.
