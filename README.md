@@ -1,8 +1,8 @@
-a\. Project information:
+**a\. Project information:**
 
-Group members: (Huzefa Ali Agar Paliwala, Anthony Matheou)
+Group members: Huzefa Ali Agar Paliwala, Anthony Matheou
 
-Student numbers:(100815505, 100828562)
+Student numbers: 100815505, 100828562
 
 Our project is a spam detector application that can distinguish spam
 emails from non-spam email. We have trained our model using a dataset of
@@ -16,25 +16,36 @@ displayed as well as the accuracy and precision of the algorithm.
 
 Below are screenshots of our application running:
 
-![](README_Images/Results.png){width="6.414583333333334in"
-height="2.160416666666667in"}
+<style>
+    .center {
+        text-align: center;
+    }
+</style>
+
+<div class="center">
+
+![](README_Images/Results.png)
 
 **Figure 1: Resultant Data Section**
+<div>&nbsp</div>
 
-![](README_Images/AccuracyPrecision.png){width="6.414583333333334in"
-height="1.2743055555555556in"}
+![](README_Images/AccuracyPrecision.png)
 
 **Figure 2: Accuracy and Precision Sections**
+<div>&nbsp</div>
 
-![](README_Images/AboutPage.png){width="6.414583333333334in"
-height="1.3111111111111111in"}
+![](README_Images/AboutPage.png)
 
 **Figure 3: About Page**
+
+<div>&nbsp</div>
+</div>
 
 Our application achieved an approximate precision and accuracy of 75%
 and 82%, respectively.
 
-b\. Improvements:
+
+**b\. Improvements**:
 
 User Interface: We improved on the user interface by improving the
 colour scheme and making it match the website icon provided to us in the
@@ -47,7 +58,7 @@ strings that are entirely numbers or entirely punctuation. We also
 ensured that the algorithm ignored the "cmds" files which created the
 training and testing files.
 
-c\. How to Run:
+**c\. How to Run**:
 
 To run our website, follow these steps:
 
@@ -68,7 +79,7 @@ To run our website, follow these steps:
 
 -   Once on the website, the data will take some time to appear.
 
-d\. Other Resources
+**d\. Other Resources**
 
 No external libraries were used in the improvement of the UI or the
 algorithm.
